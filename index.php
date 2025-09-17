@@ -1,37 +1,31 @@
 <?php
 session_start();
 
-// Conexión a BD 
-$conexion = new mysqli("localhost", "root", "juanes2007", "usuarios");
-
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
+// URL del microservicio de usuarios (ajusta el puerto según tu configuración)
+$API_URL = "http://localhost:3001/usuarios";
 
 // Si enviaron el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
 
-    // Consulta usuario (usuario es PK)
-    $sql = "SELECT usuario, password, tipo_usuario 
-            FROM usuarios 
-            WHERE usuario = ?";
-    $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("s", $usuario);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+    // Consumir API de validación
+    $url = $API_URL . "/" . urlencode($usuario) . "/" . urlencode($password);
+    $response = @file_get_contents($url);
 
-    if ($resultado->num_rows === 1) {
-        $row = $resultado->fetch_assoc();
+    if ($response !== FALSE) {
+        $data = json_decode($response, true);
 
-        // Validar contraseña (ajusta si usas password_hash en vez de texto plano)
-        if ($password === $row['password']) {
-            $_SESSION['usuario'] = $row['usuario'];
-            $_SESSION['tipo_usuario'] = $row['tipo_usuario'];
+        // Si la API devuelve error
+        if (isset($data['error'])) {
+            $error = $data['error'];
+        } else {
+            // Usuario válido → crear sesión
+            $_SESSION['usuario'] = $data['usuario'];
+            $_SESSION['tipo_usuario'] = $data['tipo_usuario'];
 
             // Redirigir según tipo de usuario
-            switch ($row['tipo_usuario']) {
+            switch ($data['tipo_usuario']) {
                 case 'cliente':
                     header("Location: cliente.php");
                     break;
@@ -42,14 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     header("Location: admin_hotel.php");
                     break;
                 default:
-                    echo "Tipo de usuario desconocido.";
+                    $error = "Tipo de usuario desconocido.";
             }
             exit;
-        } else {
-            $error = "Contraseña incorrecta";
         }
     } else {
-        $error = "Usuario no encontrado";
+        $error = "No se pudo conectar al servicio de usuarios.";
     }
 }
 ?>
@@ -81,10 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </button>
       
       <p class="text-center">¿No tienes cuenta?</p>
-<a href="register.php" 
-   class="w-full block text-center bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
-   Registrarse
-</a>
+      <a href="register.php" 
+         class="w-full block text-center bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
+         Registrarse
+      </a>
     </form>
 
     <?php if (isset($error)): ?>

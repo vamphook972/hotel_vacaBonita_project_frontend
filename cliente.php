@@ -42,15 +42,21 @@ if ($response !== FALSE) {
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($hoteles as $hotel): ?>
           <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition">
-            <h3 class="text-xl font-bold text-indigo-700 mb-2"><?= htmlspecialchars($hotel['nombre_hotel']) ?></h3>
-            <p class="text-gray-600"><strong>Ubicación:</strong> <?= htmlspecialchars($hotel['ciudad']) ?>, <?= htmlspecialchars($hotel['pais']) ?></p>
+            <h3 class="text-xl font-bold text-indigo-700 mb-2">
+              <?= htmlspecialchars($hotel['nombre_hotel']) ?>
+            </h3>
+            <p class="text-gray-600">
+              <strong>Ubicación:</strong> <?= htmlspecialchars($hotel['ciudad']) ?>, <?= htmlspecialchars($hotel['pais']) ?>
+            </p>
             
-            <a href="hotel_habitaciones.php?id=<?= $hotel['id'] ?>" 
+            <!-- Enlace pasando el ID del hotel -->
+            <a href="hotel_habitaciones.php?id=<?= urlencode($hotel['id']) ?>" 
                class="mt-4 inline-block w-full text-center bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
               Ver habitaciones
             </a>
 
-            <a href="hotel_reseñas.php?id=<?= $hotel['id'] ?>" 
+            <!-- Reseñas (ahora también podría ir con ID si prefieres en el futuro) -->
+            <a href="hotel_reseñas.php?id=<?= urlencode($hotel['id']) ?>&nombre_hotel=<?= urlencode($hotel['nombre_hotel']) ?>" 
                class="mt-4 inline-block w-full text-center bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition">
               Ver reseñas
             </a>
