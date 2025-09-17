@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agencia Vaca Bonita</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <!-- Header -->
+  <header class="bg-indigo-700 text-white py-4 text-center">
+    <h1 class="text-2xl font-bold">Agencia Vaca Bonita</h1>
+  </header>
+
+  <!-- Lista de hoteles -->
+  <main class="p-6 grid grid-cols-1 md:grid-cols-3 gap-4" id="listaHoteles">
+    <!-- Aquí se cargan los hoteles -->
+  </main>
+
+  <script>
+    const API_URL = "http://localhost:3002/hoteles";
+
+    // Obtener todos los hoteles
+    async function getHoteles() {
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error("Error al obtener los hoteles");
+        return await res.json();
+      } catch (err) {
+        console.error("Error:", err);
+        return [];
+      }
+    }
+
+    // Mostrar hoteles en la página
+    async function cargarHoteles() {
+      const hoteles = await getHoteles();
+      const cont = document.getElementById("listaHoteles");
+      cont.innerHTML = hoteles.map(hotel => `
+        <div class="bg-white p-4 rounded-xl shadow">
+          <h2 class="text-xl font-bold">${hotel.nombre_hotel}</h2>
+          <p>${hotel.ciudad}, ${hotel.pais}</p>
+          <button onclick="verDetalle(${hotel.id})" 
+            class="mt-2 bg-indigo-600 text-white px-3 py-1 rounded">Ver Detalles</button>
+          <button onclick="eliminarHotel(${hotel.id})" 
+            class="mt-2 bg-red-600 text-white px-3 py-1 rounded ml-2">Eliminar</button>
+        </div>
+      `).join("");
+    }
+
+    // Ver detalle de un hotel
+    async function verDetalle(id) {
+      try {
+        const res = await fetch(`${API_URL}/${id}`);
+        if (!res.ok) throw new Error("No se pudo obtener el hotel");
+        const hotel = await res.json();
+        alert(`Hotel: ${hotel.nombre_hotel}\nCiudad: ${hotel.ciudad}\nPaís: ${hotel.pais}`);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Crear hotel (ejemplo fijo)
+    async function crearHotel() {
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nombre_hotel: "Nuevo Hotel",
+            ciudad: "Bogotá",
+            pais: "Colombia"
+          })
+        });
+        if (!res.ok) throw new Error("No se pudo crear el hotel");
+        alert("Hotel creado con éxito");
+        cargarHoteles();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Eliminar hotel
+    async function eliminarHotel(id) {
+      if (!confirm("¿Seguro que deseas eliminar este hotel?")) return;
+      try {
+        const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+        if (!res.ok) throw new Error("No se pudo eliminar el hotel");
+        alert("Hotel eliminado con éxito");
+        cargarHoteles();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Inicializar
+    cargarHoteles();
+  </script>
+</body>
+</html>
