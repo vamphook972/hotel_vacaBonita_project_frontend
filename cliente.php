@@ -64,8 +64,8 @@ if ($response !== FALSE) {
             </a>
 
             <!-- Enlace reseñas -->
-            <a href="hotel_reseñas.php?id=<?= urlencode($hotel['id']) ?>&nombre_hotel=<?= urlencode($hotel['nombre_hotel']) ?>" 
-               class="mt-4 inline-block w-full text-center bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition">
+            <a href="hotel_reseñas.php?id_hotel=<?= urlencode($hotel['id']) ?>" 
+              class="mt-4 inline-block w-full text-center bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition">
               Ver reseñas
             </a>
           </div>
