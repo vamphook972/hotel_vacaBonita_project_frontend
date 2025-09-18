@@ -60,10 +60,6 @@ if ($response === FALSE) {
               <p class="text-gray-600"><strong>Estado:</strong> <?= htmlspecialchars($habitacion['estado']) ?></p>
               <p class="text-gray-600"><strong>Costo:</strong> $<?= number_format($habitacion['costo_habitacion'], 2) ?></p>
 
-              <a href="reservar.php?habitacion=<?= urlencode($habitacion['id_habitacion']) ?>" 
-                 class="mt-4 inline-block w-full text-center bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
-                Reservar
-              </a>
             </div>
           <?php endforeach; ?>
         </div>
