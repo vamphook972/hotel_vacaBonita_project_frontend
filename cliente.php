@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Verificar si hay usuario logueado
+if (!isset($_SESSION['usuario'])) {
+    header("Location: index.php");
+    exit();
+}
+
 // Consumir API de hoteles
 $API_URL = "http://localhost:3002/hoteles"; // ajusta el puerto de tu microservicio de hoteles
 $hoteles = [];
@@ -55,7 +63,7 @@ if ($response !== FALSE) {
               Ver habitaciones
             </a>
 
-            <!-- Reseñas (ahora también podría ir con ID si prefieres en el futuro) -->
+            <!-- Enlace reseñas -->
             <a href="hotel_reseñas.php?id=<?= urlencode($hotel['id']) ?>&nombre_hotel=<?= urlencode($hotel['nombre_hotel']) ?>" 
                class="mt-4 inline-block w-full text-center bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition">
               Ver reseñas
