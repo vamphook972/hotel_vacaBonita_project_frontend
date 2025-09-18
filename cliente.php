@@ -58,13 +58,13 @@ if ($response !== FALSE) {
             </p>
             
             <!-- Enlace pasando el ID del hotel -->
-            <a href="hotel_habitaciones.php?id=<?= urlencode($hotel['id']) ?>" 
+            <a href="hotel_habitaciones_cliente.php?id=<?= urlencode($hotel['id']) ?>" 
                class="mt-4 inline-block w-full text-center bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
               Ver habitaciones
             </a>
 
             <!-- Enlace reseñas -->
-            <a href="hotel_reseñas.php?id_hotel=<?= urlencode($hotel['id']) ?>" 
+            <a href="hotel_reseñas_cliente.php?id_hotel=<?= urlencode($hotel['id']) ?>" 
               class="mt-4 inline-block w-full text-center bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition">
               Ver reseñas
             </a>

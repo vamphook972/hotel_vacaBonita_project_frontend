@@ -70,23 +70,18 @@ if ($response === FALSE || $httpcode !== 200) {
                         <div class="mt-6 space-y-4">
                             <!-- Fila 1 -->
                             <div class="flex space-x-4">
-                                <a href="hotel_reseñas.php?id=<?= $hotel['id'] ?>" 
+                                <a href="hotel_reseñas_admin_agencia.php?id_hotel=<?= urlencode($hotel['id']) ?>" 
                                    class="flex-1 text-center bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition">
                                    Ver Reseñas
                                 </a>
-                                <a href="hotel_reservas.php?id=<?= $hotel['id'] ?>" 
+                                <a href="hotel_reservas_admin_agencia.php?id_hotel=<?= urlencode($hotel['id']) ?>" 
                                    class="flex-1 text-center bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
                                    Ver Reservas
                                 </a>
                             </div>
                             <!-- Fila 2 -->
                             <div class="flex space-x-4">
-                                <a href="eliminar_hotel.php?id=<?= $hotel['id'] ?>" 
-                                   class="flex-1 text-center bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition"
-                                   onclick="return confirm('¿Estás seguro de que deseas eliminar este hotel?');">
-                                   Eliminar Hotel
-                                </a>
-                                <a href="ver_habitaciones.php?id=<?= $hotel['id'] ?>" 
+                                <a href="ver_habitaciones_admin_agencia.php?id=<?= $hotel['id'] ?>" 
                                    class="flex-1 text-center bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
                                    Ver Habitaciones
                                 </a>
