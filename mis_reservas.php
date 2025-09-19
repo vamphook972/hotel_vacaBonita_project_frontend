@@ -10,7 +10,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'cliente') {
 $usuario = $_SESSION['usuario'];
 
 // URL del microservicio de reservas
-$API_URL = "http://localhost:3003/reservations/user/" . urlencode($usuario);
+$API_URL = "http://www.vacaBonita.com:3003/reservations/user/" . urlencode($usuario);
 
 $reservas = [];
 $error = null;
@@ -94,7 +94,7 @@ if ($response !== FALSE) {
     if (!confirm("¿Deseas pagar y confirmar esta reserva?")) return;
 
     try {
-      const response = await fetch(`http://localhost:3003/reservations/${id}/state`, {
+      const response = await fetch(`http://www.vacaBonita.com:3003/reservations/${id}/state`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"

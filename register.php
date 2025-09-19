@@ -1,5 +1,5 @@
 <?php
-$API_URL = "http://localhost:3001/usuarios";
+$API_URL = "http://www.vacaBonita.com:3001/usuarios";
 $mensaje = "";
 
 if (isset($_POST['register'])) {
