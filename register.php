@@ -1,5 +1,6 @@
 <?php
 $API_URL = "http://localhost:3001/usuarios";
+$mensaje = "";
 
 if (isset($_POST['register'])) {
     $postData = [

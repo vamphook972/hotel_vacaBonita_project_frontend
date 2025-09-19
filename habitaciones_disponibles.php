@@ -1,29 +1,21 @@
 <?php
-// hotel_habitaciones.php
-// Obtener el id del hotel desde la URL
+// hotel_habitaciones_disponibles.php
 $id_hotel = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-$API_URL = "http://localhost:3005/habitacionesHotel/$id_hotel";
+$API_URL = "http://localhost:3005/habitacionesHotelEstado/$id_hotel/libre";
 $response = @file_get_contents($API_URL);
 
 if ($response !== FALSE) {
     $habitaciones = json_decode($response, true);
-
-    // DEBUG: muestra lo que devuelve la API (usar solo en pruebas)
-// echo "<pre>API URL: $API_URL\nRespuesta:\n";
-// print_r($habitaciones);
-// echo "</pre>";
-// exit;
-
 } else {
-    $error = "No hay habitaciones diponibles para este hotel";
+    $error = "No hay habitaciones libres para este hotel";
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Habitaciones del Hotel</title>
+  <title>Habitaciones disponibles</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen">
@@ -34,7 +26,7 @@ if ($response !== FALSE) {
       <h1 class="text-2xl font-bold">Agencia Vaca Bonita</h1>
       <nav class="space-x-6">
         <a href="cliente.php" class="hover:underline">Hoteles</a>
-       <a href="habitaciones_disponibles.php?id=<?= $id_hotel ?>" class="hover:underline">Ver habitaciones disponibles</a>
+        <a href="hotel_habitaciones_disponibles.php?id=<?= $id_hotel ?>" class="hover:underline">Ver habitaciones disponibles</a>
         <a href="reservar.php" class="hover:underline">Hacer reservas</a>
         <a href="mis_reservas.php" class="hover:underline">Mis reservas</a>
         <a href="reseñas.php" class="hover:underline">Reseñas</a>
@@ -45,13 +37,13 @@ if ($response !== FALSE) {
 
   <!-- CONTENIDO -->
   <main class="max-w-7xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Habitaciones del Hotel</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Habitaciones disponibles en este hotel</h2>
 
     <?php if (isset($error)): ?>
       <p class="text-red-600 font-semibold"><?= $error ?></p>
     <?php else: ?>
       <?php if (empty($habitaciones)): ?>
-        <p class="text-gray-700">No hay habitaciones disponibles en este hotel.</p>
+        <p class="text-gray-700">Todas las habitaciones de este hotel están ocupadas.</p>
       <?php else: ?>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <?php foreach ($habitaciones as $habitacion): ?>
@@ -75,3 +67,4 @@ if ($response !== FALSE) {
 
 </body>
 </html>
+

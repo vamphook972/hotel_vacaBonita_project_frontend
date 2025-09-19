@@ -46,6 +46,7 @@ if ($response === FALSE || $httpcode !== 200) {
         <h1 class="text-xl font-bold">Agencia Vaca Bonita</h1>
         <nav class="space-x-6">
             <a href="crear_hotel.php" class="hover:underline">Crear Hotel</a>
+            <a href="cambiar_contraseña_hotel.php" class="hover:underline">Cambiar contraseña</a>
             <a href="logout.php" class="hover:underline text-red-300">Cerrar Sesión</a>
         </nav>
     </header>

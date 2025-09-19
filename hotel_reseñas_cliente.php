@@ -1,19 +1,30 @@
 <?php
 // Ver reseñas de un hotel específico
 $reseñas = [];
+$promedios = null;
 $error = null;
 
 if (isset($_GET['id_hotel'])) {
     $id_hotel = intval($_GET['id_hotel']); // seguridad
-    $API_URL = "http://localhost:3004/resenas/hotel/" . $id_hotel;
 
-    $response = @file_get_contents($API_URL);
+    // --- Obtener reseñas ---
+    $API_RESEÑAS = "http://localhost:3004/resenas/hotel/" . $id_hotel;
+    $response = @file_get_contents($API_RESEÑAS);
 
     if ($response !== FALSE) {
         $reseñas = json_decode($response, true);
     } else {
         $error = "No se pudieron obtener las reseñas para este hotel.";
     }
+
+    // --- Obtener promedios ---
+    $API_PROMEDIOS = "http://localhost:3004/resenas/promedios/" . $id_hotel;
+    $promResponse = @file_get_contents($API_PROMEDIOS);
+
+    if ($promResponse !== FALSE) {
+        $promedios = json_decode($promResponse, true);
+    }
+
 } else {
     $error = "No se especificó ningún hotel.";
 }
@@ -42,6 +53,17 @@ if (isset($_GET['id_hotel'])) {
         <h2 class="text-2xl font-bold text-gray-800 mb-6">
             Reseñas del Hotel (ID: <?= isset($_GET['id_hotel']) ? htmlspecialchars($_GET['id_hotel']) : "Desconocido" ?>)
         </h2>
+
+        <!-- Mostrar promedios si existen -->
+        <?php if ($promedios): ?>
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h3 class="text-xl font-bold text-indigo-700 mb-3">⭐ Promedios del Hotel</h3>
+                <p class="text-gray-700">Estrellas: <span class="font-semibold"><?= htmlspecialchars($promedios['promedio_estrellas']) ?>/5</span></p>
+                <p class="text-gray-700">Limpieza: <span class="font-semibold"><?= htmlspecialchars($promedios['promedio_limpieza']) ?>/10</span></p>
+                <p class="text-gray-700">Facilidades: <span class="font-semibold"><?= htmlspecialchars($promedios['promedio_facilidades']) ?>/10</span></p>
+                <p class="text-gray-700">Comodidades: <span class="font-semibold"><?= htmlspecialchars($promedios['promedio_comodidades']) ?>/10</span></p>
+            </div>
+        <?php endif; ?>
 
         <?php if ($error): ?>
             <p class="text-red-600 font-semibold"><?= $error ?></p>

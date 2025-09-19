@@ -1,4 +1,6 @@
 <?php
+$errorMsg = ""; // variable para guardar el error del servidor
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recibir datos del formulario
     $user = $_POST['user'];
@@ -19,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Convertir a JSON
     $payload = json_encode($data);
 
-    // URL de la API (ajusta el puerto si es diferente)
+    // URL de la API
     $url = "http://localhost:3003/reservations";
 
     // Inicializar cURL
@@ -36,9 +38,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Manejar errores
     if (curl_errno($ch)) {
-        echo "Error en la solicitud: " . curl_error($ch);
+        $errorMsg = "Error en la solicitud: " . curl_error($ch);
     } else {
-        echo "<pre>Respuesta del servidor: " . $response . "</pre>";
+        $decoded = json_decode($response, true);
+        if (isset($decoded['error'])) {
+            // Si viene un error desde la API
+            $errorMsg = $decoded['error'];
+        } else {
+            // Si todo salió bien (puedes redirigir o mostrar un mensaje de éxito)
+            header("Location: cliente.php?success=1");
+            exit;
+        }
     }
 
     // Cerrar cURL
@@ -79,13 +89,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 mb-2">Crear Reserva</button>
         </form>
+
+        <!-- Mostrar mensaje de error si existe -->
+        <?php if (!empty($errorMsg)): ?>
+            <div class="mt-4 p-3 bg-red-100 text-red-700 border border-red-400 rounded">
+                ⚠️ <?php echo htmlspecialchars($errorMsg); ?>
+            </div>
+        <?php endif; ?>
+
         <!-- Botón para regresar -->
-    <div class="mt-4 text-center">
-      <a href="cliente.php"
-         class="inline-block bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
-        ⬅️ Volver
-      </a>
-    </div>
+        <div class="mt-4 text-center">
+            <a href="cliente.php"
+               class="inline-block bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                ⬅️ Volver
+            </a>
+        </div>
     </div>
 </body>
 </html>

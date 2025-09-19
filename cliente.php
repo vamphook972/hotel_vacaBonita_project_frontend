@@ -35,6 +35,7 @@ if ($response !== FALSE) {
         <a href="reservar.php" class="hover:underline">Hacer reservas</a>
         <a href="mis_reservas.php" class="hover:underline">Mis reservas</a>
         <a href="reseñas.php" class="hover:underline">Reseñas</a>
+        <a href="cambiar_contraseña_cliente.php" class="hover:underline">Cambiar contraseña</a>
         <a href="logout.php" class="hover:underline text-red-300">Cerrar sesión</a>
       </nav>
     </div>

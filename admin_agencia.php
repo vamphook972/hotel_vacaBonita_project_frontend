@@ -45,6 +45,8 @@ if ($response === FALSE || $httpcode !== 200) {
         <h1 class="text-xl font-bold">Agencia Vaca Bonita - Administrador de la Agencia</h1>
         <nav class="space-x-6">
             <a href="usuarios_info.php" class="hover:underline">Ver información de usuarios</a>
+            <a href="cambiar_contraseña_agencia.php" class="hover:underline">Cambiar contraseña</a>
+            <a href="eliminar_usuarios.php" class="hover:underline">Eliminar usuarios</a>
             <a href="logout.php" class="hover:underline text-red-300">Cerrar Sesión</a>
         </nav>
     </header>
@@ -84,6 +86,10 @@ if ($response === FALSE || $httpcode !== 200) {
                                 <a href="ver_habitaciones_admin_agencia.php?id=<?= $hotel['id'] ?>" 
                                    class="flex-1 text-center bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
                                    Ver Habitaciones
+                                </a>
+                                <a href="cambiar_estado_hotel.php?id=<?= $hotel['id'] ?>" 
+                                   class="flex-1 text-center bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                                   Cambiar estado
                                 </a>
                             </div>
                         </div>
