@@ -7,8 +7,8 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
-// Consumir API de hoteles
-$API_URL = "http://localhost:3002/hoteles"; // ajusta el puerto de tu microservicio de hoteles
+// Consumir API de hoteles SOLO en estado activo
+$API_URL = "http://localhost:3002/hoteles/estado/activo"; 
 $hoteles = [];
 
 $response = @file_get_contents($API_URL);
@@ -47,6 +47,8 @@ if ($response !== FALSE) {
 
     <?php if (isset($error)): ?>
       <p class="text-red-600 font-semibold"><?= $error ?></p>
+    <?php elseif (empty($hoteles)): ?>
+      <p class="text-gray-600 font-semibold">No hay hoteles activos en este momento.</p>
     <?php else: ?>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($hoteles as $hotel): ?>
