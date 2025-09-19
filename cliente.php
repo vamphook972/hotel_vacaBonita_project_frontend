@@ -57,7 +57,7 @@ if ($response !== FALSE) {
               <?= htmlspecialchars($hotel['nombre_hotel']) ?>
             </h3>
             <p class="text-gray-600">
-              <strong>Ubicación:</strong> <?= htmlspecialchars($hotel['ciudad']) ?>, <?= htmlspecialchars($hotel['pais']) ?>
+              <strong>Ubicación:</strong> <?= htmlspecialchars($hotel['ciudad_direccion']) ?>, <?= htmlspecialchars($hotel['pais']) ?>
             </p>
             
             <!-- Enlace pasando el ID del hotel -->
