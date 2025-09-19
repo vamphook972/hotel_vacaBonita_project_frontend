@@ -66,7 +66,7 @@ if ($response === FALSE || $httpcode !== 200) {
                         <p><span class="font-semibold">Usuario:</span> <?= htmlspecialchars($hotel['usuario']) ?></p>
                         <p><span class="font-semibold">Nombre:</span> <?= htmlspecialchars($hotel['nombre_hotel']) ?></p>
                         <p><span class="font-semibold">País:</span> <?= htmlspecialchars($hotel['pais']) ?></p>
-                        <p><span class="font-semibold">Ciudad:</span> <?= htmlspecialchars($hotel['ciudad_direccion']) ?></p>
+                        <p><span class="font-semibold">Ciudad y direccion:</span> <?= htmlspecialchars($hotel['ciudad_direccion']) ?></p>
 
                         <!-- Botones organizados en 2 filas -->
                         <div class="mt-6 space-y-4">

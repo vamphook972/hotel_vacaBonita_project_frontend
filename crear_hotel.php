@@ -15,18 +15,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = $_SESSION['usuario']; // El usuario logueado
     $nombre_hotel = trim($_POST['nombre_hotel'] ?? '');
     $pais = trim($_POST['pais'] ?? '');
-    $ciudad = trim($_POST['ciudad'] ?? '');
+    $ciudad_direccion = trim($_POST['ciudad_direccion'] ?? '');
     $costo_habitacion = $_POST['costo_habitacion'] ?? [];
     $cantidad_habitaciones = $_POST['cantidad_habitaciones'] ?? [];
 
-    if (!$nombre_hotel || !$pais || !$ciudad) {
+    if (!$nombre_hotel || !$pais || !$ciudad_direccion) {
         $error = "Todos los campos son obligatorios.";
     } else {
         $payload = [
             "usuario" => $usuario,
             "nombre_hotel" => $nombre_hotel,
             "pais" => $pais,
-            "ciudad" => $ciudad,
+            "ciudad_direccion" => $ciudad_direccion,
             "costo_habitacion" => $costo_habitacion,
             "cantidad_habitaciones" => $cantidad_habitaciones
         ];
@@ -92,8 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="text" name="pais" class="w-full border px-3 py-2 rounded" required>
         </div>
         <div>
-          <label class="block font-semibold">Ciudad:</label>
-          <input type="text" name="ciudad" class="w-full border px-3 py-2 rounded" required>
+          <label class="block font-semibold">Ciudad y direccion:</label>
+          <input type="text" name="ciudad_direccion" class="w-full border px-3 py-2 rounded" required>
         </div>
       </div>
 
